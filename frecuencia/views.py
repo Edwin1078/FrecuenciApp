@@ -59,14 +59,14 @@ def generar_tabla(request):
             pos = total_frecuencia_absoluta / 2
 
             # Encontrar la fila donde frecuencia acumulada sea mayor o igual a pos
-            fila_encontrada = None
+            fila_encontrada = 0
             for fila in tabla:
                 if fila['frecuencia_acumulada'] >= pos:
                     fila_encontrada = fila
                     break  # Salimos del bucle al encontrar la primera coincidencia
 
             # Encontrar la fila anterior
-            fila_anterior = None
+            fila_anterior = 0
             if fila_encontrada:
                 index_encontrado = tabla.index(fila_encontrada)
                 if index_encontrado > 0:  # Asegúrate de que no sea la primera fila
@@ -99,7 +99,7 @@ def generar_tabla(request):
                 if index_encontrado > 0:  # Asegúrate de que no sea la primera fila
                     fila_anterior_m = tabla[index_encontrado - 1]['frecuencia_absoluta'] 
 
-            #fi_1 = 0 if fila_anterior_m == 0 else fila_anterior_m['frecuencia_absoluta']        
+                   
 
             # Encontrar la fila posterior
             fila_posterior_m = 0
@@ -122,7 +122,6 @@ def generar_tabla(request):
             'fila_encontrada_m': fila_encontrada_m,
             'fila_anterior_m': fila_anterior_m,
             'fila_posterior_m': fila_posterior_m,
-            #'fi-1': fi_1,
         })
 
     return redirect('ingresar_num_filas')

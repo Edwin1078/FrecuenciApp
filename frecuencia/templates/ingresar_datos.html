@@ -1,17 +1,80 @@
-<!-- generador_tabla/templates/generador_tabla/ingresar_datos.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingresar Datos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left; /* Alinear texto a la izquierda */
+        }
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: bold; /* Hacer el texto más destacado */
+        }
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 400px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Ingresar Datos para {{ num_filas }} Filas</h1>
-    <form method="post" action="{% url 'generar_tabla' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="hidden" name="num_filas" value="{{ num_filas }}">
-        <button type="submit">Crear Tabla</button>
-    </form>
+    <div class="container">
+        <h1>Ingresar Datos para {{ num_filas }} Filas</h1>
+        <form method="post" action="{% url 'generar_tabla' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <input type="hidden" name="num_filas" value="{{ num_filas }}">
+            <button type="submit">Crear Tabla</button>
+        </form>
+    </div>
 </body>
 </html>
