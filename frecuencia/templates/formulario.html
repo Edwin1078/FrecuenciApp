@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generar Tabla</title>
+</head>
+<body>
+    <h1>Generar Tabla</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Generar Tabla</button>
+    </form>
+</body>
+</html>

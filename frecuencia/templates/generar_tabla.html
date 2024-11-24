@@ -1,0 +1,54 @@
+<!-- generador_tabla/templates/generador_tabla/generar_tabla.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabla Generada</title>
+</head>
+<body>
+    <h1>Tabla de Frecuencias</h1>
+    <a href="{% url 'ingresar_num_filas' %}">Generar Otra Tabla</a>
+    <br>
+    <br>
+
+    <table border="1">
+        <tr>
+            <th>Interno</th>
+            <th>Amplitud</th>
+            <th>Marca de Columna</th>
+            <th>Frecuencia Absoluta</th>
+            <th>Frecuencia Acumulada</th>
+            <th>xf</th>
+        </tr>
+        {% for fila in tabla %}
+        <tr>
+            <td>{{ fila.interno.0 }} - {{ fila.interno.1 }}</td>
+            <td>{{ fila.amplitud }}</td>
+            <td>{{ fila.marca_columna }}</td>
+            <td>{{ fila.frecuencia_absoluta }}</td>
+            <td>{{ fila.frecuencia_acumulada }}</td>
+            <td>{{ fila.xf }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h2>Total Frecuencia Absoluta (n): {{ total_frecuencia_absoluta }}</h2>
+    <h2>Total xf: {{ total_xf }}</h2>
+    <h2>Media: {{ total_xf }} / {{ total_frecuencia_absoluta }}</h2>
+    <h2>Media: {{ media|floatformat:2 }}</h2>
+    <h2>Posición n/2: {{ total_frecuencia_absoluta }} / 2</h2>
+    <h2>Posición: {{ posicion }}</h2>
+    <h2>Posición Intervalo: {{ fila_encontrada.frecuencia_acumulada }}</h2>
+    <h2>Fila Mediana: {{ fila_encontrada }}</h2>
+    <h2>Fi-1: {{ fila_anterior.frecuencia_acumulada }}</h2>
+    <h2>fi: {{ fila_encontrada.frecuencia_absoluta }}</h2>
+    <h2>Li: {{ fila_encontrada.interno.0 }}</h2>
+    <h2>A: {{ fila_encontrada.amplitud }}</h2>
+    <h2>Frecuencia (s) Max: {{ frecuencia_max }}</h2>
+    <h2>Fila Moda: {{ fila_encontrada_m }}</h2>
+    {% comment %} <h2>fi-1: {{ fi_1 }}</h2> {% endcomment %}
+    <h2>fi-1: {{ fila_anterior_m }}</h2>
+    <h2>fi+1: {{ fila_posterior_m }}</h2>
+       
+    
+</body>
+</html>

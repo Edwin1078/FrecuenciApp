@@ -1,0 +1,16 @@
+<!-- generador_tabla/templates/generador_tabla/ingresar_num_filas.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingresar Número de Filas</title>
+</head>
+<body>
+ <h1>Ingresar Número de Filas</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Siguiente</button>
+    </form>
+</body>
+</html>
