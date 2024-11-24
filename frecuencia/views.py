@@ -36,17 +36,17 @@ def generar_tabla(request):
                 })
 
             amplitud = num2 - num1
-            marca_columna = (num1 + num2) / 2
+            marca_clase = (num1 + num2) / 2
 
             frecuencia_absoluta = frecuencias[i] if i < len(frecuencias) else 0
             frecuencia_acumulada = frecuencia_absoluta if i == 0 else tabla[i-1]['frecuencia_acumulada'] + frecuencia_absoluta
-            xf = marca_columna * frecuencia_absoluta
+            xf = marca_clase * frecuencia_absoluta
             longitud_tabla = len(tabla)
 
             tabla.append({
-                'interno': (num1, num2),
+                'intervalo': (num1, num2),
                 'amplitud': amplitud,
-                'marca_columna': marca_columna,
+                'marca_clase': marca_clase,
                 'frecuencia_absoluta': frecuencia_absoluta,
                 'frecuencia_acumulada': frecuencia_acumulada,
                 'xf': xf,
@@ -54,6 +54,8 @@ def generar_tabla(request):
 
             total_frecuencia_absoluta += frecuencia_absoluta
             total_xf += xf
+            n = total_frecuencia_absoluta
+            
 
             med = total_xf / total_frecuencia_absoluta
             pos = total_frecuencia_absoluta / 2
@@ -64,6 +66,11 @@ def generar_tabla(request):
                 if fila['frecuencia_acumulada'] >= pos:
                     fila_encontrada = fila
                     break  # Salimos del bucle al encontrar la primera coincidencia
+            
+            if fila_encontrada is not 0 and 'frecuencia_absoluta' in fila:
+                fi = fila_encontrada['frecuencia_absoluta']
+                a = fila_encontrada['amplitud']
+               
 
             # Encontrar la fila anterior
             fila_anterior = 0
@@ -71,6 +78,24 @@ def generar_tabla(request):
                 index_encontrado = tabla.index(fila_encontrada)
                 if index_encontrado > 0:  # Asegúrate de que no sea la primera fila
                     fila_anterior = tabla[index_encontrado - 1]
+                    
+            if fila_anterior is not 0 and 'frecuencia_acumulada' in fila_anterior:
+                fi_1 = fila_anterior['frecuencia_acumulada']
+                op1 = 2 * fi_1
+                op2 = n - op1
+                op3 = 2 * fi
+                op4 = op2 * a
+                op5 = li * op3
+                op6 = op5 + op3
+                r = op6/op3 
+                
+                
+                
+            if fila_encontrada is not 0 and 'frecuencia_absoluta' in fila:
+                li = fila_encontrada['intervalo'][0]
+                
+            
+            
 
             # Encontrar la fila posterior
             fila_posterior = 0
@@ -87,7 +112,7 @@ def generar_tabla(request):
 
             # Encontrar la fila donde frecuencia absoluta sea el valor mayor
             fila_encontrada_m = 0
-            for indice, fila in enumerate(tabla):
+            for intervalo, fila in enumerate(tabla):
                 if fila['frecuencia_absoluta'] == max_frecuencia:
                     fila_encontrada_m = fila
                     break  # Salimos del bucle al encontrar la primera coincidencia
@@ -122,6 +147,18 @@ def generar_tabla(request):
             'fila_encontrada_m': fila_encontrada_m,
             'fila_anterior_m': fila_anterior_m,
             'fila_posterior_m': fila_posterior_m,
+            'fi_1': fi_1,
+            'li': li,
+            'fi':fi,
+            'n': n,
+            'a': a,
+            'op1': op1,
+            'op2': op2,
+            'op3': op3,
+            'op4': op4,
+            'op5': op5,
+            'op6': op6,
+            'r': r,
         })
 
     return redirect('ingresar_num_filas')
