@@ -1,6 +1,6 @@
 # generador_tabla/views.py
 from django.shortcuts import render, redirect
-from .forms import NumeroFilasForm, IntervaloFrecuenciaForm, Hallar
+from .forms import NumeroFilasForm, IntervaloFrecuenciaForm
 
 def ingresar_num_filas(request):
     if request.method == 'POST':
@@ -16,10 +16,22 @@ def ingresar_num_filas(request):
 
     return render(request, 'index.html', {'form': form})
 
+
 def generar_tabla(request):
+    
     if request.method == 'POST':
         intervalos = request.POST.get('intervalos').split(';')
         frecuencias = list(map(int, request.POST.get('frecuencias').split(',')))
+        dato_h = request.POST.get('datoH')
+        valor = 0
+        if dato_h == "Q":
+            valor = 4
+        elif dato_h == "D":
+            valor = 10
+        else:
+            valor = 100
+
+        k = request.POST.get('k')
 
         tabla = []
         total_frecuencia_absoluta = 0
@@ -184,19 +196,10 @@ def generar_tabla(request):
             'desviacion_estandar_p': desviacion_estandar_p,
             'varianza_m': varianza_m,
             'desviacion_estandar_m': desviacion_estandar_m,
+            'dato_h': dato_h,
+            'k': k,
+            'valor': valor,
         })
 
     return redirect('ingresar_num_filas')
 
-def hallar(request):
-    if request.method == 'POST':
-        form = Hallar(request.POST)
-        if form.is_valid():
-            # Procesar los datos del formulario
-            dato_h = form.cleaned_data['datoH']
-            num = form.cleaned_data['num']
-            # Hacer algo con los datos...
-    else:
-        form = Hallar()
-
-    return render(request, 'hallar.html', {'form': form})

@@ -66,7 +66,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Ingresar Datos para {{ num_filas }} Filas</h1>
+        <h1>Ingresar Datos para {{ num_filas }} Filas (Intervalos)</h1>
         <form method="post" action="{% url 'generar_tabla' %}">
             {% csrf_token %}
             <div class="form-group">

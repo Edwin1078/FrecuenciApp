@@ -66,13 +66,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Hallar:</h1>
-        <form method="post" action="{% url 'hallar' %}">
+        <h1>Hallar?:</h1>
+        <form method="post" action="{% url 'generar_tabla' %}">
             {% csrf_token %}
             <div class="form-group">
                 {{ form.as_p }}
             </div>
-            <input type="hidden" name="k" value="{{ num_filas }}">
             <button type="submit">Calcular</button>
         </form>
     </div>

@@ -50,7 +50,7 @@
             font-weight: bold;
         }
         .ampliar {
-            width: 130px; /* Ampliar el encabezado "Interno" */
+            width: 140px; /* Ampliar el encabezado "Interno" */
         }
         tr:nth-child(even) {
             background-color: #f2f2f2; /* Alternar colores de fila */
@@ -71,12 +71,13 @@
 <body>
     <h1>Tabla de Frecuencias</h1>
     <a href="{% url 'ingresar_num_filas' %}">Generar Otra Tabla</a>
+    <a href="javascript:history.back()">Hallar</a>
 
     <table>
         <tr>
-            <th class="ampliar">Intervalo (Li - Ls)</th> <!-- Aplicar clase para ampliar -->
+            <th>Intervalo (Li - Ls)</th> <!-- Aplicar clase para ampliar -->
             <th>Amplitud (A)</th>
-            <th>Marca de Clase (x)</th>
+            <th class="ampliar">Marca de Clase (x)</th>
             <th>Frecuencia Absoluta (f)</th>
             <th>Frecuencia Acumulada (F)</th>
             <th>xf</th>
@@ -108,7 +109,8 @@
         <h3>Varianza de la Muestra = {{ varianza_m|floatformat:2 }}</h3>
         <h3>Desviación de la Muestra = {{ desviacion_estandar_m|floatformat:2 }}</h3>
     </div>
-    
+   
+    </div>
     <div>
         <h3>Total Frecuencia Absoluta (n) = {{ total_frecuencia_absoluta }}</h3>
         <h3>Total (xf) = {{ total_xf }}</h3>
@@ -150,6 +152,9 @@
         <h3>Desviacion Estandar de la población = {{ desviacion_estandar_p|floatformat:2 }} (unidades de los datos) </h3>
         <h3>Varianza de la Muestra fi(x - m)² / n - 1 = {{ varianza_m|floatformat:2 }} (unidades de los datos)² </h3>
         <h3>Desviacion Estandar de la muestra = {{ desviacion_estandar_m|floatformat:2 }} (unidades de los datos) </h3>
+        <h3>Hallar = {{ dato_h }} </h3>
+        <h3>k = {{ k }} </h3>
+        <h3>Divisor de (kn) = {{ valor }} </h3>
     </div>
 </body>
 </html>
