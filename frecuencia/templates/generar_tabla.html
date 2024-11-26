@@ -99,7 +99,7 @@
         </tr>
         {% endfor %}
     </table>
-    {% comment %} <a href="{% url 'hallar' %}">Hallar</a> {% endcomment %}
+   
     <div class="resultados">
         <h3>Media = {{ media|floatformat:2 }}</h3>
         <h3>Mediana = {{ r }}</h3>
@@ -109,15 +109,13 @@
         <h3>Varianza de la Muestra = {{ varianza_m|floatformat:2 }}</h3>
         <h3>Desviación de la Muestra = {{ desviacion_estandar_m|floatformat:2 }}</h3>
     </div>
-   
-    </div>
     <div>
         <h3>Total Frecuencia Absoluta (n) = {{ total_frecuencia_absoluta }}</h3>
         <h3>Total (xf) = {{ total_xf }}</h3>
         <h3>Media = Total(xf) / Total Frecuencia Absoluta(n)</h3>
         <h3>Media = {{ total_xf }} / {{ total_frecuencia_absoluta }}</h3>
         <h3>Media = {{ media|floatformat:2 }}</h3>
-        <h3>Clase de la Mediana (n/2) = {{ posicion }}</h3>
+        <h3>Clase del Intervalo (n/2) = {{ posicion }}</h3>
         <h3>Posición Intervalo = {{ fila_encontrada.frecuencia_acumulada }}</h3>
         <h3>Intervalo de la Clase:</h3>
             <ul>
@@ -142,9 +140,9 @@
         <h3>Mediana = {{ li }} + ( ({{ op2 }} / 2 ) / {{ fi }} ) {{ a }}</h3>
         <h3>Mediana = {{ li }} + ( {{ op2 }} / {{ op3 }} ) {{ a }}</h3>
         <h3>Mediana = {{ li }} + ( {{ op4 }} / {{ op3 }} )</h3>
-        <h3>Mediana = ( {{ op5 }} +  {{ op3 }} ) / {{ op3 }} </h3>
+        <h3>Mediana = ( {{ op5 }} +  {{ op4 }} ) / {{ op3 }} </h3>
         <h3>Mediana = {{ op6 }} /  {{ op3 }} </h3>
-        <h3>Mediana = {{ r }} </h3>
+        <h3>Mediana = {{ r|floatformat:2 }} </h3>
         <h3>Frecuencia Absoluta Max = {{ frecuencia_max }}</h3>
         <h3>Moda = {{ fila_encontrada_m.marca_clase }}</h3>
         <h3>Total fi(x - m)² = {{ total_f_x_m|floatformat:2 }}</h3>
@@ -154,7 +152,7 @@
         <h3>Desviacion Estandar de la muestra = {{ desviacion_estandar_m|floatformat:2 }} (unidades de los datos) </h3>
         <h3>Hallar = {{ dato_h }} </h3>
         <h3>k = {{ k }} </h3>
-        <h3>Divisor de (kn) = {{ valor }} </h3>
+        <h3>Denominador de (kn) = {{ valor }} </h3>
     </div>
 </body>
 </html>
