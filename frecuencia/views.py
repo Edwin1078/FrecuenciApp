@@ -1,6 +1,6 @@
 # generador_tabla/views.py
 from django.shortcuts import render, redirect
-from .forms import NumeroFilasForm, IntervaloFrecuenciaForm
+from .forms import NumeroFilasForm, IntervaloFrecuenciaForm, Hallar
 
 def ingresar_num_filas(request):
     if request.method == 'POST':
@@ -41,7 +41,12 @@ def generar_tabla(request):
             frecuencia_absoluta = frecuencias[i] if i < len(frecuencias) else 0
             frecuencia_acumulada = frecuencia_absoluta if i == 0 else tabla[i-1]['frecuencia_acumulada'] + frecuencia_absoluta
             xf = marca_clase * frecuencia_absoluta
-            longitud_tabla = len(tabla)
+            total_frecuencia_absoluta += frecuencia_absoluta
+            total_xf += xf
+            n = total_frecuencia_absoluta
+            
+
+            
 
             tabla.append({
                 'intervalo': (num1, num2),
@@ -52,13 +57,11 @@ def generar_tabla(request):
                 'xf': xf,
             })
 
-            total_frecuencia_absoluta += frecuencia_absoluta
-            total_xf += xf
-            n = total_frecuencia_absoluta
-            
-
+           
             med = total_xf / total_frecuencia_absoluta
             pos = total_frecuencia_absoluta / 2
+
+           
 
             # Encontrar la fila donde frecuencia acumulada sea mayor o igual a pos
             fila_encontrada = 0
@@ -70,6 +73,17 @@ def generar_tabla(request):
             if fila_encontrada is not 0 and 'frecuencia_absoluta' in fila:
                 fi = fila_encontrada['frecuencia_absoluta']
                 a = fila_encontrada['amplitud']
+
+            total_f_x_m = 0
+
+            # Segundo bucle para calcular x - m
+            for fila in tabla:
+                x_m = fila['marca_clase'] - med  # Calcular x - m
+                fila['x_m'] = x_m  # Almacenar x - m
+                fila['x_m_squared'] = x_m ** 2  # Almacenar (x - m)^2
+                fila['f_x_m'] = fila['frecuencia_absoluta'] * fila['x_m_squared']
+
+                total_f_x_m += fila['f_x_m']
                
 
             # Encontrar la fila anterior
@@ -87,13 +101,18 @@ def generar_tabla(request):
                 op4 = op2 * a
                 op5 = li * op3
                 op6 = op5 + op3
-                r = op6/op3 
+                r = op6/op3
+                varianza_p = total_f_x_m / n
+                desviacion_estandar_p = varianza_p ** 0.5
+                n_1 = n - 1
+                varianza_m = total_f_x_m / n_1
+                desviacion_estandar_m = varianza_m ** 0.5
                 
                 
                 
             if fila_encontrada is not 0 and 'frecuencia_absoluta' in fila:
                 li = fila_encontrada['intervalo'][0]
-                
+                ls = fila_encontrada['intervalo'][1]
             
             
 
@@ -149,6 +168,7 @@ def generar_tabla(request):
             'fila_posterior_m': fila_posterior_m,
             'fi_1': fi_1,
             'li': li,
+            'ls': ls,
             'fi':fi,
             'n': n,
             'a': a,
@@ -159,6 +179,24 @@ def generar_tabla(request):
             'op5': op5,
             'op6': op6,
             'r': r,
+            'total_f_x_m': total_f_x_m,
+            'varianza_p': varianza_p,
+            'desviacion_estandar_p': desviacion_estandar_p,
+            'varianza_m': varianza_m,
+            'desviacion_estandar_m': desviacion_estandar_m,
         })
 
     return redirect('ingresar_num_filas')
+
+def hallar(request):
+    if request.method == 'POST':
+        form = Hallar(request.POST)
+        if form.is_valid():
+            # Procesar los datos del formulario
+            dato_h = form.cleaned_data['datoH']
+            num = form.cleaned_data['num']
+            # Hacer algo con los datos...
+    else:
+        form = Hallar()
+
+    return render(request, 'hallar.html', {'form': form})

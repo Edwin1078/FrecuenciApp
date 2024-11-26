@@ -7,3 +7,21 @@ class NumeroFilasForm(forms.Form):
 class IntervaloFrecuenciaForm(forms.Form):
     intervalos = forms.CharField(label='Intervalos (formato: num1,num2; num1,num2; ...)', max_length=500)
     frecuencias = forms.CharField(label='Frecuencias (separadas por comas)', max_length=100)
+
+
+class Hallar(forms.Form):
+    DATOS_CHOICES = [
+        ('Q', 'Quartil'),
+        ('P', 'Percentil'),
+        ('D', 'Decil'),
+    ]
+
+    datoH = forms.ChoiceField(
+        label = 'Hallar',
+        choices=DATOS_CHOICES
+    )
+    num = forms.IntegerField(
+        label='Número',
+        min_value=0,
+        required=True
+    )
