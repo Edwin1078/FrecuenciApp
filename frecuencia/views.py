@@ -23,15 +23,20 @@ def generar_tabla(request):
         intervalos = request.POST.get('intervalos').split(';')
         frecuencias = list(map(int, request.POST.get('frecuencias').split(',')))
         dato_h = request.POST.get('datoH')
+        datos_f = request.POST.get('datos_f')
         valor = 0
+        texto = ""
         if dato_h == "Q":
             valor = 4
+            texto = "Cuartil"
         elif dato_h == "D":
             valor = 10
+            texto = "Decil"
         else:
             valor = 100
-
+            texto = "Percentil"
         k = request.POST.get('k')
+        k = int(k)
 
         tabla = []
         total_frecuencia_absoluta = 0
@@ -119,12 +124,44 @@ def generar_tabla(request):
                 n_1 = n - 1
                 varianza_m = total_f_x_m / n_1
                 desviacion_estandar_m = varianza_m ** 0.5
+
+            pos_q = ( k * n ) / valor
+
+
+            
+            # Encontrar la fila donde frecuencia acumulada sea mayor o igual a pos_q
+            fila_encontrada_q = 0
+            for fila in tabla:
+                if fila['frecuencia_acumulada'] >= pos_q:
+                    fila_encontrada_q = fila
+                    break  # Salimos del bucle al encontrar la primera coincidencia
+            
+            if fila_encontrada_q is not 0 and 'frecuencia_absoluta' in fila:
+                fi_q = fila_encontrada_q['frecuencia_acumulada']
+                a_q = fila_encontrada_q['amplitud']
+
+            
+            # Encontrar la fila anterior
+            fila_anterior_q = 0
+            if fila_encontrada_q:
+                index_encontrado_q = tabla.index(fila_encontrada_q)
+                if index_encontrado_q > 0:  # Asegúrate de que no sea la primera fila
+                    fila_anterior_q = tabla[index_encontrado_q - 1]
+
+            fi_1_q = 0
+
+            if fila_anterior_q is not 0 and 'frecuencia_acumulada' in fila_anterior_q:
+                fi_1_q = fila_anterior_q['frecuencia_acumulada']
                 
                 
                 
             if fila_encontrada is not 0 and 'frecuencia_absoluta' in fila:
                 li = fila_encontrada['intervalo'][0]
                 ls = fila_encontrada['intervalo'][1]
+
+            if fila_encontrada_q is not 0 and 'frecuencia_absoluta' in fila:
+                li_q = fila_encontrada_q['intervalo'][0]
+                ls_q = fila_encontrada_q['intervalo'][1]
             
             
 
@@ -164,6 +201,11 @@ def generar_tabla(request):
                 if index_encontrado < len(tabla) - 1:  # Asegúrate de que no sea la última fila
                     fila_posterior_m = tabla[index_encontrado + 1]['frecuencia_absoluta'] 
 
+            op_q1 = pos_q - fi_1_q
+            op_q2 = fi_q - fi_1_q
+            op_q3 = op_q1 / op_q2
+            op_q4 = a * op_q3
+            r_q = li_q + op_q4
 
         return render(request, 'generar_tabla.html', {
             'tabla': tabla,
@@ -199,6 +241,20 @@ def generar_tabla(request):
             'dato_h': dato_h,
             'k': k,
             'valor': valor,
+            'texto':texto,
+            'pos_q': pos_q,
+            'li_q': li_q,
+            'a_q': a_q,
+            'fi_q': fi_q,
+            'fi_1_q':fi_1_q,
+            'datos_f':datos_f,
+            'dato_h':dato_h,
+            'op_q1':op_q1,
+            'op_q2':op_q2,
+            'op_q3':op_q3,
+            'op_q4':op_q4,
+            'r_q':r_q,
+
         })
 
     return redirect('ingresar_num_filas')
