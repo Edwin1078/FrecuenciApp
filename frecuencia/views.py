@@ -117,7 +117,7 @@ def generar_tabla(request):
                 op3 = 2 * fi
                 op4 = op2 * a
                 op5 = li * op3
-                op6 = op5 + op3
+                op6 = op5 + op4
                 r = op6/op3
                 varianza_p = total_f_x_m / n
                 desviacion_estandar_p = varianza_p ** 0.5

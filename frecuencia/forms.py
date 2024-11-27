@@ -15,5 +15,5 @@ class IntervaloFrecuenciaForm(forms.Form):
     datos_f = forms.CharField(label='Escriba a que hace referencia los datos', max_length=50)
 
     datoH = forms.ChoiceField(label = 'Hallar',choices=DATOS_CHOICES )
-    k = forms.IntegerField(label='Número', min_value=0, required=True )
+    k = forms.IntegerField(label='Número', min_value=0, required=False )
     
